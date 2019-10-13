@@ -1,4 +1,4 @@
-'From Cuis 5.0 [latest update: #3922] on 13 October 2019 at 11:09:50 am'!
+'From Cuis 5.0 [latest update: #3922] on 13 October 2019 at 11:17:41 am'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
 !provides: 'CairoMorphic' 1 79!
 !requires: 'Cairo' 1 7 nil!
@@ -175,7 +175,7 @@ handlesMouseDown: anEvent
 handlesMouseScroll: anEvent
 	^ true! !
 
-!CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:42:56'!
+!CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/13/2019 11:16:44'!
 initialize
 	super initialize.
 	self addMorph: (CairoBorderedRectMorph new
@@ -196,7 +196,8 @@ initialize
 							borderColor: Color black;
 							yourself).
 							
-	self addMorph: PluggableButtonMorph example position: 200@100.! !
+	self addMorph: PluggableButtonMorph example position: 200@100.
+	self morphExtent: 500@500! !
 
 !CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 22:12:05'!
 mouseButton1Down: aMouseButtonEvent localPosition: localEventPosition
@@ -225,15 +226,6 @@ zoomIn
 zoomOut
 	scale _ scale - 0.1.
 	self redrawNeeded! !
-
-!CairoMorphExample class methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:23:41'!
-example
-	"self example"
-	|morph|
-	morph _ CairoMorphExample new
-				morphExtent: 300@300;
-				yourself.
-	morph openInWorld.! !
 
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/8/2019 19:19:07'!
 cairo
