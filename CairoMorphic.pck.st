@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3866] on 13 October 2019 at 9:01:42 am'!
+'From Cuis 5.0 [latest update: #3922] on 13 October 2019 at 11:09:50 am'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 78!
+!provides: 'CairoMorphic' 1 79!
 !requires: 'Cairo' 1 7 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
@@ -13,6 +13,16 @@ DisplayScreen subclass: #CairoDisplayScreen
 	category: 'CairoMorphic'!
 !classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic!
 CairoDisplayScreen class
+	instanceVariableNames: ''!
+
+!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
+BorderedRectMorph subclass: #CairoBorderedRectMorph
+	instanceVariableNames: 'rotation'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CairoMorphic'!
+!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
+CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
 !classDefinition: #CairoMorph category: #CairoMorphic!
@@ -33,16 +43,6 @@ CairoMorph subclass: #CairoMorphExample
 	category: 'CairoMorphic'!
 !classDefinition: 'CairoMorphExample class' category: #CairoMorphic!
 CairoMorphExample class
-	instanceVariableNames: ''!
-
-!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
-BorderedRectMorph subclass: #CairoBorderedRectMorph
-	instanceVariableNames: 'rotation'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'CairoMorphic'!
-!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
-CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
 !classDefinition: #CairoCanvas category: #CairoMorphic!
@@ -111,6 +111,18 @@ uninstall
 	Smalltalk at: #Display put: d.
 	DisplayScreen startUp.
 	Display forceToScreen.! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
+clippedSubmorph
+	^ false! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
+rotatedBy: angle
+	rotation _ angle! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
+rotation
+	^ rotation! !
 
 !CairoMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:34:36'!
 drawMorphOn: aCanvas
@@ -223,18 +235,6 @@ example
 				yourself.
 	morph openInWorld.! !
 
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
-clippedSubmorph
-	^ false! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
-rotatedBy: angle
-	rotation _ angle! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
-rotation
-	^ rotation! !
-
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/8/2019 19:19:07'!
 cairo
 	^ cairo! !
@@ -272,7 +272,7 @@ drawButtonIconFromCurrentMorph
 		^true ].
 	^false! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/12/2019 19:50:56'!
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/13/2019 11:07:17'!
 drawString: aString at: aPoint font: fontOrNil color: aColor
 
 	|font fw slant fsize str|
@@ -291,7 +291,8 @@ drawString: aString at: aPoint font: fontOrNil color: aColor
 	cairo setFontSize: fsize; moveTo: aPoint x @ (aPoint y +  fsize).
 	"Cairo printDebug: 'TEXT: ', aString."
 	str _ aString reject: [:aCharacter | {Character newLineCharacter. Character tab} includes: aCharacter].
-	cairo showText: str.! !
+	cairo showText: str.
+	^ nil! !
 
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 21:30:33'!
 drawString: aString from: firstIndex to: lastIndex at: aPoint font: fontOrNil color: aColor
