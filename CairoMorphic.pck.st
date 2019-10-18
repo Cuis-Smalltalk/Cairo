@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3922] on 13 October 2019 at 11:17:41 am'!
+'From Cuis 5.0 [latest update: #3922] on 18 October 2019 at 1:48:29 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 79!
+!provides: 'CairoMorphic' 1 80!
 !requires: 'Cairo' 1 7 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
@@ -171,6 +171,10 @@ drawMorphOn: aCanvas
 handlesMouseDown: anEvent
 	^ true! !
 
+!CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/18/2019 13:46:48'!
+handlesMouseOver: anEvent
+	^ true! !
+
 !CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 21:52:41'!
 handlesMouseScroll: anEvent
 	^ true! !
@@ -207,9 +211,12 @@ mouseButton1Down: aMouseButtonEvent localPosition: localEventPosition
 mouseButton2Down: aMouseButtonEvent localPosition: localEventPosition
 	self zoomOut! !
 
-!CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 22:00:33'!
+!CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/18/2019 13:45:19'!
+mouseEnter: anEvent
+	self activeHand newKeyboardFocus: self.! !
+
+!CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/18/2019 13:47:05'!
 mouseScroll: aMouseEvent localPosition: localEventPosition
-	self halt.
 	aMouseEvent direction
 		caseOf: {
 			[ #up ] 		-> 		[  self zoomOut ].
