@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3866] on 12 October 2019 at 7:19:03 pm'!
+'From Cuis 5.0 [latest update: #3923] on 18 October 2019 at 5:41:55 pm'!
 'Description FFI for Cairo Vector Graphics library and CairoCanvas.'!
-!provides: 'Cairo' 1 39!
+!provides: 'Cairo' 1 40!
 !requires: 'FFI' 1 33 nil!
 SystemOrganization addCategory: #Cairo!
 
@@ -3617,9 +3617,12 @@ moveTo: aPoint
 paint
 	Cairo paint: ctx! !
 
-!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/6/2019 09:30:20'!
-rectangle: bounds
-	Cairo rectangle: ctx x: bounds origin x  y: bounds origin y  width: bounds width  height: bounds height ! !
+!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/18/2019 17:39:52'!
+rectangle: rect
+	|r|
+	r _ rect rounded.
+	
+	Cairo rectangle: ctx x: r origin x  y: r origin y  width: r width  height: r height ! !
 
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/6/2019 09:29:20'!
 rectangleFrom: aPoint extent: anotherPoint
