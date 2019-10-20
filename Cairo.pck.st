@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3923] on 19 October 2019 at 7:29:25 pm'!
+'From Cuis 5.0 [latest update: #3923] on 20 October 2019 at 10:37:52 am'!
 'Description FFI for Cairo Vector Graphics library and CairoCanvas.'!
-!provides: 'Cairo' 1 42!
+!provides: 'Cairo' 1 43!
 !requires: 'FFI' 1 33 nil!
 SystemOrganization addCategory: #Cairo!
 
@@ -3589,9 +3589,9 @@ clipPreserve
 context
 	^ ctx! !
 
-!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 15:01:49'!
+!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/20/2019 10:36:21'!
 curveTo: aPoint control1: control1 control2: control2
-	Cairo curveTo:  ctx x1: control1 x y1: control1 y  x2: control2 x  y2: control2 y  x3: aPoint x  y3: aPoint y ! !
+	Cairo curveTo:  ctx x1: control1 x asFloat y1: control1 y asFloat x2: control2 x  asFloat y2: control2 y asFloat  x3: aPoint x asFloat  y3: aPoint y asFloat ! !
 
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/6/2019 02:03'!
 destroy
