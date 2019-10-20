@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3922] on 18 October 2019 at 1:48:29 pm'!
+'From Cuis 5.0 [latest update: #3923] on 20 October 2019 at 10:40:32 am'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 80!
+!provides: 'CairoMorphic' 1 81!
 !requires: 'Cairo' 1 7 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
@@ -233,6 +233,20 @@ zoomIn
 zoomOut
 	scale _ scale - 0.1.
 	self redrawNeeded! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/20/2019 10:21:41'!
+fillColor: aFillColor do: aBlock
+	"Prepare parameters for drawing stroke, fill, or both."
+
+	cairo setSourceColor: aFillColor.
+	aBlock value
+	! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/20/2019 10:34:57'!
+withCairoDo: aBlock
+	"Give direct access to cairo context"
+	
+	aBlock value: cairo! !
 
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/8/2019 19:19:07'!
 cairo
