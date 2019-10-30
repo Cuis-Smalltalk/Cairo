@@ -1,6 +1,6 @@
-'From Cuis 5.0 [latest update: #3923] on 20 October 2019 at 10:40:32 am'!
+'From Cuis 5.0 [latest update: #3926] on 26 October 2019 at 11:03:24 am'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 81!
+!provides: 'CairoMorphic' 1 83!
 !requires: 'Cairo' 1 7 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
@@ -13,16 +13,6 @@ DisplayScreen subclass: #CairoDisplayScreen
 	category: 'CairoMorphic'!
 !classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic!
 CairoDisplayScreen class
-	instanceVariableNames: ''!
-
-!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
-BorderedRectMorph subclass: #CairoBorderedRectMorph
-	instanceVariableNames: 'rotation'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'CairoMorphic'!
-!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
-CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
 !classDefinition: #CairoMorph category: #CairoMorphic!
@@ -43,6 +33,16 @@ CairoMorph subclass: #CairoMorphExample
 	category: 'CairoMorphic'!
 !classDefinition: 'CairoMorphExample class' category: #CairoMorphic!
 CairoMorphExample class
+	instanceVariableNames: ''!
+
+!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
+BorderedRectMorph subclass: #CairoBorderedRectMorph
+	instanceVariableNames: 'rotation'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CairoMorphic'!
+!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
+CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
 !classDefinition: #CairoCanvas category: #CairoMorphic!
@@ -111,18 +111,6 @@ uninstall
 	Smalltalk at: #Display put: d.
 	DisplayScreen startUp.
 	Display forceToScreen.! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
-clippedSubmorph
-	^ false! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
-rotatedBy: angle
-	rotation _ angle! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
-rotation
-	^ rotation! !
 
 !CairoMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:34:36'!
 drawMorphOn: aCanvas
@@ -234,13 +222,97 @@ zoomOut
 	scale _ scale - 0.1.
 	self redrawNeeded! !
 
-!CairoCanvas methodsFor: 'api' stamp: 'MM 10/20/2019 10:21:41'!
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
+clippedSubmorph
+	^ false! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
+rotatedBy: angle
+	rotation _ angle! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
+rotation
+	^ rotation! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:02:28'!
 fillColor: aFillColor do: aBlock
 	"Prepare parameters for drawing stroke, fill, or both."
 
 	cairo setSourceColor: aFillColor.
-	aBlock value
+	^ aBlock value
 	! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:01:57'!
+multiCurveTo: coordinatesAreRelative toPoints: toPoints control1Points: control1Points control2Points: control2Points
+
+	| c1 c2 to |
+	coordinatesAreRelative
+		ifFalse: [
+			1 to: toPoints size do: [ :i |
+				to _ toPoints at: i.
+				c1 _ control1Points at: i.
+				c2 _ control2Points at: i.
+				cairo curveTo: to control1: c1 control2: c2 ]]
+		ifTrue: [
+			1 to: toPoints size do: [ :i |
+				to _ toPoints at: i.
+				c1 _ control1Points at: i.
+				c2 _ control2Points at: i.
+				cairo curveTo: to control1: c1 control2: c2 ]].
+	cairo stroke! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:01:48'!
+multiLineTo: coordinatesAreRelative points: toPoints
+
+	| to |
+	coordinatesAreRelative
+		ifFalse: [
+			1 to: toPoints size do: [ :i |
+				to _ toPoints at: i.
+				cairo lineTo: to ]]
+		ifTrue: [
+			1 to: toPoints size do: [ :i |
+				to _ toPoints at: i.
+				cairo lineTo: to ]].
+	cairo stroke! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:02:46'!
+multiMoveTo: coordinatesAreRelative points: points
+
+	| isFirst |
+	isFirst _ true.
+	coordinatesAreRelative
+		ifFalse: [
+			points do: [ :p |
+				isFirst
+					ifTrue: [ cairo moveTo: p x @ (p y) ]
+					ifFalse: [ cairo lineTo: p x @ (p y) ].
+				isFirst _ false ]]
+		ifTrue: [
+			points do: [ :p |
+				isFirst
+					ifTrue: [ cairo moveTo: p x @ (p y) ]
+					ifFalse: [ cairo lineTo: p x @ (p y) ].
+				isFirst _ false ]].
+	cairo stroke! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:01:39'!
+polyLine: points
+
+	| p  |
+	p _ points first.
+	cairo moveTo: p.
+	2 to: points size do: [ :i |
+		p _ points at: i.	
+		cairo lineTo: p ].
+	cairo stroke.! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:00:47'!
+strokeWidth: aNumber color: color fillColor: fillColor do: aBlock
+	color ifNotNil: [cairo setSourceColor: color].
+	fillColor ifNotNil: [cairo setSourceColor: fillColor].
+	cairo setLineWidth: aNumber.
+	^ aBlock value! !
 
 !CairoCanvas methodsFor: 'api' stamp: 'MM 10/20/2019 10:34:57'!
 withCairoDo: aBlock
@@ -251,6 +323,10 @@ withCairoDo: aBlock
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/8/2019 19:19:07'!
 cairo
 	^ cairo! !
+
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/26/2019 10:35:23'!
+closePath
+	cairo closePath! !
 
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/12/2019 13:47:11'!
 createImageSurface: aForm
@@ -464,9 +540,8 @@ rotatedBy: angle at: aPoint do: aBlock
 	cairo restore.
 		! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 20:10:49'!
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/22/2019 22:26:30'!
 roundRect: aRectangle color: aColor radius: radius
-	Transcript show: aRectangle; cr.
 	cairo setSourceColor: aColor;
 		   roundedRectangle: aRectangle radius: radius ;
 			fill.! !

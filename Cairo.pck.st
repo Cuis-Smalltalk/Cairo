@@ -1,37 +1,37 @@
-'From Cuis 5.0 [latest update: #3923] on 20 October 2019 at 10:37:52 am'!
+'From Cuis 5.0 [latest update: #3944] on 30 October 2019 at 12:52:21 pm'!
 'Description FFI for Cairo Vector Graphics library and CairoCanvas.'!
-!provides: 'Cairo' 1 43!
+!provides: 'Cairo' 1 46!
 !requires: 'FFI' 1 33 nil!
 SystemOrganization addCategory: #Cairo!
 
 
-!classDefinition: #Cairo category: #Cairo!
+!classDefinition: #Cairo category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
 Object subclass: #Cairo
 	instanceVariableNames: ''
 	classVariableNames: 'Enums'
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'Cairo class' category: #Cairo!
+!classDefinition: 'Cairo class' category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
 Cairo class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoContext category: #Cairo!
+!classDefinition: #CairoContext category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
 Object subclass: #CairoContext
 	instanceVariableNames: 'ctx'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'CairoContext class' category: #Cairo!
+!classDefinition: 'CairoContext class' category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
 CairoContext class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoSurface category: #Cairo!
+!classDefinition: #CairoSurface category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
 Object subclass: #CairoSurface
 	instanceVariableNames: 'externalForm surface'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'CairoSurface class' category: #Cairo!
+!classDefinition: 'CairoSurface class' category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
 CairoSurface class
 	instanceVariableNames: ''!
 
@@ -3585,6 +3585,10 @@ clipExtents: aRectangle
 clipPreserve
 	Cairo clipPreserve: ctx! !
 
+!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/26/2019 10:36:31'!
+closePath
+	Cairo closePath: ctx! !
+
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/6/2019 09:31:36'!
 context
 	^ ctx! !
@@ -3596,6 +3600,21 @@ curveTo: aPoint control1: control1 control2: control2
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/6/2019 02:03'!
 destroy
 	Cairo destroy: ctx! !
+
+!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/30/2019 12:49:13'!
+deviceToUser: aPoint
+
+	| x y  |
+	
+	x _ ExternalAddress gcallocate: (ExternalType atomicTypeNamed: 'double') byteSize.
+	y _ ExternalAddress gcallocate: (ExternalType atomicTypeNamed: 'double') byteSize.
+	
+	x doubleAt: 1 put: aPoint x.
+	y doubleAt: 1 put: aPoint y.
+	
+	Cairo deviceToUser: ctx x: x  y: y.	
+	
+	^ Point x: (x doubleAt: 1) y: (y doubleAt: 1)! !
 
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/6/2019 09:28:25'!
 fill
@@ -3724,6 +3743,19 @@ stroke
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 16:15:01'!
 translate: aPoint
 	Cairo translate: ctx x: aPoint x y: aPoint y! !
+
+!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/30/2019 12:49:01'!
+userToDevice: aPoint
+	|x y|
+	x _ ExternalAddress gcallocate: (ExternalType atomicTypeNamed: 'double') byteSize.
+	y _ ExternalAddress gcallocate: (ExternalType atomicTypeNamed: 'double') byteSize.
+	
+	x doubleAt: 1 put: aPoint x.
+	y doubleAt: 1 put: aPoint y.
+	
+	Cairo userToDevice: ctx x: x  y: y.
+	
+	^ Point x: (x doubleAt: 1) y: (y doubleAt: 1) ! !
 
 !CairoContext class methodsFor: 'examples' stamp: 'MM 10/6/2019 02:04'!
 example1
