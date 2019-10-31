@@ -1,57 +1,57 @@
-'From Cuis 5.0 [latest update: #3926] on 26 October 2019 at 11:03:24 am'!
+'From Cuis 5.0 [latest update: #3944] on 31 October 2019 at 7:25:08 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 83!
+!provides: 'CairoMorphic' 1 84!
 !requires: 'Cairo' 1 7 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
 
-!classDefinition: #CairoDisplayScreen category: #CairoMorphic!
+!classDefinition: #CairoDisplayScreen category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 DisplayScreen subclass: #CairoDisplayScreen
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic!
+!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 CairoDisplayScreen class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorph category: #CairoMorphic!
+!classDefinition: #CairoMorph category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 RectangleLikeMorph subclass: #CairoMorph
 	instanceVariableNames: 'rotation scale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorph class' category: #CairoMorphic!
+!classDefinition: 'CairoMorph class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 CairoMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorphExample category: #CairoMorphic!
+!classDefinition: #CairoMorphExample category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 CairoMorph subclass: #CairoMorphExample
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorphExample class' category: #CairoMorphic!
+!classDefinition: 'CairoMorphExample class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 CairoMorphExample class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
+!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 BorderedRectMorph subclass: #CairoBorderedRectMorph
 	instanceVariableNames: 'rotation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
+!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoCanvas category: #CairoMorphic!
+!classDefinition: #CairoCanvas category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 BitBltCanvas subclass: #CairoCanvas
 	instanceVariableNames: 'surface cairo images'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoCanvas class' category: #CairoMorphic!
+!classDefinition: 'CairoCanvas class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
 CairoCanvas class
 	instanceVariableNames: ''!
 
@@ -328,7 +328,7 @@ cairo
 closePath
 	cairo closePath! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/12/2019 13:47:11'!
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/31/2019 13:18:21'!
 createImageSurface: aForm
 	|stride externalForm ptr surf |
 	
@@ -338,7 +338,7 @@ createImageSurface: aForm
 	
 	(BitBlt toForm: externalForm)
 		copy: aForm boundingBox
-		from: 0@0 in: aForm.
+		from: 0@0 in: aForm. 
 		
 	stride _ Cairo formatStrideForWidth: Cairo CairoFormatARGB32 width: aForm extent x. 
 	surf _ Cairo imageSurfaceCreateForData: ptr format: Cairo CairoFormatARGB32 width: aForm extent x height: aForm extent y stride: stride.
@@ -549,6 +549,14 @@ roundRect: aRectangle color: aColor radius: radius
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 22:13:11'!
 scale: aPoint
 	cairo scale: aPoint! !
+
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/31/2019 19:12:55'!
+spline: fromPoint to: toPoint  control1: c1 control2: c2 width: width color: aColor
+	cairo moveTo: fromPoint;
+			setSourceColor: aColor;
+			setLineWidth: width;
+			curveTo: toPoint  control1: c1  control2: c2 ;
+			stroke! !
 
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 18:47:23'!
 translate: aPoint
