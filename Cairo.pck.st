@@ -1,37 +1,37 @@
-'From Cuis 5.0 [latest update: #3944] on 30 October 2019 at 12:52:21 pm'!
+'From Cuis 5.0 [latest update: #3944] on 2 November 2019 at 1:43:07 pm'!
 'Description FFI for Cairo Vector Graphics library and CairoCanvas.'!
-!provides: 'Cairo' 1 46!
+!provides: 'Cairo' 1 47!
 !requires: 'FFI' 1 33 nil!
 SystemOrganization addCategory: #Cairo!
 
 
-!classDefinition: #Cairo category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
+!classDefinition: #Cairo category: #Cairo stamp: 'MM 11/2/2019 13:43:08'!
 Object subclass: #Cairo
 	instanceVariableNames: ''
 	classVariableNames: 'Enums'
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'Cairo class' category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
+!classDefinition: 'Cairo class' category: #Cairo stamp: 'MM 11/2/2019 13:43:08'!
 Cairo class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoContext category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
+!classDefinition: #CairoContext category: #Cairo stamp: 'MM 11/2/2019 13:43:08'!
 Object subclass: #CairoContext
 	instanceVariableNames: 'ctx'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'CairoContext class' category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
+!classDefinition: 'CairoContext class' category: #Cairo stamp: 'MM 11/2/2019 13:43:08'!
 CairoContext class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoSurface category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
+!classDefinition: #CairoSurface category: #Cairo stamp: 'MM 11/2/2019 13:43:08'!
 Object subclass: #CairoSurface
 	instanceVariableNames: 'externalForm surface'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'CairoSurface class' category: #Cairo stamp: 'MM 10/30/2019 12:52:21'!
+!classDefinition: 'CairoSurface class' category: #Cairo stamp: 'MM 11/2/2019 13:43:08'!
 CairoSurface class
 	instanceVariableNames: ''!
 
@@ -3631,6 +3631,10 @@ lineTo: aPoint
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/19/2019 19:27:44'!
 moveTo: aPoint
 	Cairo moveTo: ctx x: aPoint x asFloat y: aPoint y asFloat! !
+
+!CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 11/2/2019 13:35:33'!
+newPath
+	Cairo newPath: ctx! !
 
 !CairoContext methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 12:46:06'!
 paint

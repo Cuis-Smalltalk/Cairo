@@ -1,57 +1,57 @@
-'From Cuis 5.0 [latest update: #3944] on 31 October 2019 at 7:25:08 pm'!
+'From Cuis 5.0 [latest update: #3944] on 2 November 2019 at 1:43:11 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 84!
-!requires: 'Cairo' 1 7 nil!
+!provides: 'CairoMorphic' 1 86!
+!requires: 'Cairo' 1 46 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
 
-!classDefinition: #CairoDisplayScreen category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: #CairoDisplayScreen category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 DisplayScreen subclass: #CairoDisplayScreen
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 CairoDisplayScreen class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorph category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: #CairoMorph category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 RectangleLikeMorph subclass: #CairoMorph
 	instanceVariableNames: 'rotation scale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorph class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: 'CairoMorph class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 CairoMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorphExample category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: #CairoMorphExample category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 CairoMorph subclass: #CairoMorphExample
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorphExample class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: 'CairoMorphExample class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 CairoMorphExample class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 BorderedRectMorph subclass: #CairoBorderedRectMorph
 	instanceVariableNames: 'rotation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoCanvas category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: #CairoCanvas category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 BitBltCanvas subclass: #CairoCanvas
 	instanceVariableNames: 'surface cairo images'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoCanvas class' category: #CairoMorphic stamp: 'MM 10/31/2019 19:25:08'!
+!classDefinition: 'CairoCanvas class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
 CairoCanvas class
 	instanceVariableNames: ''!
 
@@ -241,6 +241,19 @@ fillColor: aFillColor do: aBlock
 	cairo setSourceColor: aFillColor.
 	^ aBlock value
 	! !
+
+!CairoCanvas methodsFor: 'api' stamp: 'MM 11/2/2019 13:41:49'!
+fillPolygon: points color: aColor
+
+	cairo newPath; 
+		moveTo: points first.
+	
+	points allButFirst do: [:aPoint |
+		cairo lineTo: aPoint].
+	
+	cairo closePath;
+			setSourceColor: aColor;
+			fill.! !
 
 !CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:01:57'!
 multiCurveTo: coordinatesAreRelative toPoints: toPoints control1Points: control1Points control2Points: control2Points
@@ -568,6 +581,14 @@ windowFrame: aRectangle color: aColor radius: r border: bw labelHeight: lh gradi
 		   roundedRectangle: aRectangle radius: 10;
 		   fill! !
 
+!CairoCanvas class methodsFor: 'examples' stamp: 'MM 11/2/2019 13:42:43'!
+fillPolygonExample
+	"self fillPolygonExample"
+	CairoCanvas withExtent: 500@500
+		draw: [:canvas |
+			canvas fillRectangle: (0@0 corner: 500@500) color: Color white.
+			canvas fillPolygon: {100@100. 150@200. 50@200} color: Color red ]! !
+
 !CairoCanvas class methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 18:26:36'!
 display: aMorph
 	^ self withExtent: aMorph morphExtent display: aMorph! !
@@ -620,6 +641,20 @@ withExtent: extent display: aMorph
 	[canvas _ self withExtent: extent.
 	
 	canvas fullDraw: aMorph.
+	
+	canvas form displayAt: 0@0]
+	ensure: [canvas release]! !
+
+!CairoCanvas class methodsFor: 'as yet unclassified' stamp: 'MM 11/2/2019 13:38:23'!
+withExtent: extent draw: aBlock
+
+	"For testing purposes"
+	
+	|canvas|
+	
+	[canvas _ self withExtent: extent.
+	
+	aBlock value: canvas.
 	
 	canvas form displayAt: 0@0]
 	ensure: [canvas release]! !
