@@ -1,57 +1,57 @@
-'From Cuis 5.0 [latest update: #3944] on 2 November 2019 at 1:43:11 pm'!
+'From Cuis 5.0 [latest update: #4219] on 14 June 2020 at 2:30:33 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 86!
+!provides: 'CairoMorphic' 1 88!
 !requires: 'Cairo' 1 46 nil!
 SystemOrganization addCategory: #CairoMorphic!
 
 
-!classDefinition: #CairoDisplayScreen category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
+!classDefinition: #CairoDisplayScreen category: #CairoMorphic!
 DisplayScreen subclass: #CairoDisplayScreen
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
+!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic!
 CairoDisplayScreen class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorph category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
-RectangleLikeMorph subclass: #CairoMorph
-	instanceVariableNames: 'rotation scale'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorph class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
-CairoMorph class
-	instanceVariableNames: ''!
-
-!classDefinition: #CairoMorphExample category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
-CairoMorph subclass: #CairoMorphExample
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorphExample class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
-CairoMorphExample class
-	instanceVariableNames: ''!
-
-!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
+!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
 BorderedRectMorph subclass: #CairoBorderedRectMorph
 	instanceVariableNames: 'rotation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
+!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
 CairoBorderedRectMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoCanvas category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
+!classDefinition: #CairoMorph category: #CairoMorphic!
+RectangleLikeMorph subclass: #CairoMorph
+	instanceVariableNames: 'rotation scale'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CairoMorphic'!
+!classDefinition: 'CairoMorph class' category: #CairoMorphic!
+CairoMorph class
+	instanceVariableNames: ''!
+
+!classDefinition: #CairoMorphExample category: #CairoMorphic!
+CairoMorph subclass: #CairoMorphExample
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CairoMorphic'!
+!classDefinition: 'CairoMorphExample class' category: #CairoMorphic!
+CairoMorphExample class
+	instanceVariableNames: ''!
+
+!classDefinition: #CairoCanvas category: #CairoMorphic!
 BitBltCanvas subclass: #CairoCanvas
 	instanceVariableNames: 'surface cairo images'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoCanvas class' category: #CairoMorphic stamp: 'MM 11/2/2019 13:43:12'!
+!classDefinition: 'CairoCanvas class' category: #CairoMorphic!
 CairoCanvas class
 	instanceVariableNames: ''!
 
@@ -111,6 +111,18 @@ uninstall
 	Smalltalk at: #Display put: d.
 	DisplayScreen startUp.
 	Display forceToScreen.! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
+clippedSubmorph
+	^ false! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
+rotatedBy: angle
+	rotation _ angle! !
+
+!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
+rotation
+	^ rotation! !
 
 !CairoMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:34:36'!
 drawMorphOn: aCanvas
@@ -221,18 +233,6 @@ zoomIn
 zoomOut
 	scale _ scale - 0.1.
 	self redrawNeeded! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
-clippedSubmorph
-	^ false! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
-rotatedBy: angle
-	rotation _ angle! !
-
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
-rotation
-	^ rotation! !
 
 !CairoCanvas methodsFor: 'api' stamp: 'MM 10/26/2019 11:02:28'!
 fillColor: aFillColor do: aBlock
@@ -581,13 +581,14 @@ windowFrame: aRectangle color: aColor radius: r border: bw labelHeight: lh gradi
 		   roundedRectangle: aRectangle radius: 10;
 		   fill! !
 
-!CairoCanvas class methodsFor: 'examples' stamp: 'MM 11/2/2019 13:42:43'!
+!CairoCanvas class methodsFor: 'examples' stamp: 'MM 11/2/2019 15:05:31'!
 fillPolygonExample
 	"self fillPolygonExample"
 	CairoCanvas withExtent: 500@500
 		draw: [:canvas |
 			canvas fillRectangle: (0@0 corner: 500@500) color: Color white.
-			canvas fillPolygon: {100@100. 150@200. 50@200} color: Color red ]! !
+			canvas fillPolygon: {100@100. 150@200. 50@200} color: Color red.
+			canvas fillPolygon: {0@20. 20@0. 40@20. 20@40} color: Color blue ]! !
 
 !CairoCanvas class methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 18:26:36'!
 display: aMorph
