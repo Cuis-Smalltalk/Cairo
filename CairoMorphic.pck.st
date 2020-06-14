@@ -374,12 +374,12 @@ drawButtonIconFromCurrentMorph
 		^true ].
 	^false! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/13/2019 11:07:17'!
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 6/14/2020 14:29:28'!
 drawString: aString at: aPoint font: fontOrNil color: aColor
 
 	|font fw slant fsize str|
 	
-	font _ fontOrNil ifNil: [AbstractFont default].
+	font _ fontOrNil ifNil: [FontFamily defaultFamilyAndPointSize].
 	fw _ font isBold ifTrue: [Cairo CairoFontWeightBold]
 			ifFalse: [Cairo CairoFontWeightNormal ].
 	slant _ font isItalic ifTrue: [Cairo CairoFontSlantItalic ]
