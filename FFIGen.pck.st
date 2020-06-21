@@ -5,7 +5,7 @@ Author: Mariano Montone <marianomontone@gmail.com>
 
 See: https://github.com/rpav/c2ffi'!
 !provides: 'FFIGen' 1 26!
-!requires: 'FFI' 1 35 nil!
+!requires: 'FFI' 1 33 nil!
 !requires: 'JSON' 1 19 nil!
 SystemOrganization addCategory: #FFIGen!
 
