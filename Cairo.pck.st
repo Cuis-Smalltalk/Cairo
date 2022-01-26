@@ -1,37 +1,37 @@
-'From Cuis 5.0 [latest update: #4219] on 14 June 2020 at 7:47:01 pm'!
+'From Cuis 5.0 [latest update: #4635] on 25 June 2021 at 7:18:34 pm'!
 'Description FFI for Cairo Vector Graphics library and CairoCanvas.'!
-!provides: 'Cairo' 1 48!
+!provides: 'Cairo' 1 49!
 !requires: 'FFI' 1 33 nil!
-SystemOrganization addCategory: #Cairo!
+SystemOrganization addCategory: 'Cairo'!
 
 
-!classDefinition: #Cairo category: #Cairo!
+!classDefinition: #Cairo category: 'Cairo'!
 Object subclass: #Cairo
 	instanceVariableNames: ''
 	classVariableNames: 'Enums'
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'Cairo class' category: #Cairo!
+!classDefinition: 'Cairo class' category: 'Cairo'!
 Cairo class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoContext category: #Cairo!
+!classDefinition: #CairoContext category: 'Cairo'!
 Object subclass: #CairoContext
 	instanceVariableNames: 'ctx'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'CairoContext class' category: #Cairo!
+!classDefinition: 'CairoContext class' category: 'Cairo'!
 CairoContext class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoSurface category: #Cairo!
+!classDefinition: #CairoSurface category: 'Cairo'!
 Object subclass: #CairoSurface
 	instanceVariableNames: 'externalForm surface'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cairo'!
-!classDefinition: 'CairoSurface class' category: #Cairo!
+!classDefinition: 'CairoSurface class' category: 'Cairo'!
 CairoSurface class
 	instanceVariableNames: ''!
 
@@ -3761,8 +3761,11 @@ userToDevice: aPoint
 	
 	^ Point x: (x doubleAt: 1) y: (y doubleAt: 1) ! !
 
-!CairoContext class methodsFor: 'examples' stamp: 'MM 10/6/2019 02:04'!
+!CairoContext class methodsFor: 'examples' stamp: 'MM 6/25/2021 12:09:36'!
 example1
+
+	"self example1"
+	
 	|surf status ctx |
 
 surf _ Cairo imageSurfaceCreate:0 width:100 height: 100.

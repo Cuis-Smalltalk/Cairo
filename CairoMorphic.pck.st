@@ -1,57 +1,57 @@
-'From Cuis 5.0 [latest update: #4219] on 14 June 2020 at 2:30:33 pm'!
+'From Cuis 6.0 [latest update: #5049] on 26 January 2022 at 5:28:48 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 88!
+!provides: 'CairoMorphic' 1 91!
 !requires: 'Cairo' 1 46 nil!
-SystemOrganization addCategory: #CairoMorphic!
+SystemOrganization addCategory: 'CairoMorphic'!
 
 
-!classDefinition: #CairoDisplayScreen category: #CairoMorphic!
+!classDefinition: #CairoDisplayScreen category: 'CairoMorphic'!
 DisplayScreen subclass: #CairoDisplayScreen
 	instanceVariableNames: 'canvas'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoDisplayScreen class' category: #CairoMorphic!
+!classDefinition: 'CairoDisplayScreen class' category: 'CairoMorphic'!
 CairoDisplayScreen class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoBorderedRectMorph category: #CairoMorphic!
-BorderedRectMorph subclass: #CairoBorderedRectMorph
+!classDefinition: #CairoBoxedMorph category: 'CairoMorphic'!
+BoxedMorph subclass: #CairoBoxedMorph
 	instanceVariableNames: 'rotation'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoBorderedRectMorph class' category: #CairoMorphic!
-CairoBorderedRectMorph class
+!classDefinition: 'CairoBoxedMorph class' category: 'CairoMorphic'!
+CairoBoxedMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorph category: #CairoMorphic!
-RectangleLikeMorph subclass: #CairoMorph
+!classDefinition: #CairoMorph category: 'CairoMorphic'!
+BoxedMorph subclass: #CairoMorph
 	instanceVariableNames: 'rotation scale'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorph class' category: #CairoMorphic!
+!classDefinition: 'CairoMorph class' category: 'CairoMorphic'!
 CairoMorph class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoMorphExample category: #CairoMorphic!
+!classDefinition: #CairoMorphExample category: 'CairoMorphic'!
 CairoMorph subclass: #CairoMorphExample
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoMorphExample class' category: #CairoMorphic!
+!classDefinition: 'CairoMorphExample class' category: 'CairoMorphic'!
 CairoMorphExample class
 	instanceVariableNames: ''!
 
-!classDefinition: #CairoCanvas category: #CairoMorphic!
+!classDefinition: #CairoCanvas category: 'CairoMorphic'!
 BitBltCanvas subclass: #CairoCanvas
 	instanceVariableNames: 'surface cairo images'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CairoMorphic'!
-!classDefinition: 'CairoCanvas class' category: #CairoMorphic!
+!classDefinition: 'CairoCanvas class' category: 'CairoMorphic'!
 CairoCanvas class
 	instanceVariableNames: ''!
 
@@ -112,15 +112,15 @@ uninstall
 	DisplayScreen startUp.
 	Display forceToScreen.! !
 
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
+!CairoBoxedMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:13:40'!
 clippedSubmorph
 	^ false! !
 
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
+!CairoBoxedMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 17:20:44'!
 rotatedBy: angle
 	rotation _ angle! !
 
-!CairoBorderedRectMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
+!CairoBoxedMorph methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:19:41'!
 rotation
 	^ rotation! !
 
@@ -182,7 +182,7 @@ handlesMouseScroll: anEvent
 !CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/13/2019 11:16:44'!
 initialize
 	super initialize.
-	self addMorph: (CairoBorderedRectMorph new
+	self addMorph: (CairoBoxedMorph new
 							morphExtent: 50@50;
 							morphPosition: 50@50;
 							rotatedBy: -20;
@@ -191,7 +191,7 @@ initialize
 							borderColor: Color black;
 							yourself).
 							
-	self addMorphBack: (CairoBorderedRectMorph new
+	self addMorphBack: (CairoBoxedMorph new
 							morphExtent: 100@100;
 							morphPosition: 50@50;
 							rotatedBy: 20;
@@ -360,7 +360,7 @@ createImageSurface: aForm
 		
 	^ CairoSurface new surface: surf; externalForm: externalForm; yourself! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/7/2019 19:45:36'!
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 1/26/2022 17:26:06'!
 drawButtonIconFromCurrentMorph
 	"We assume that we are drawing a PluggableButtonMorph,
 	or some morph that conforms the required protocol.
@@ -369,7 +369,7 @@ drawButtonIconFromCurrentMorph
 	currentMorph magnifiedIcon ifNotNil: [ :theIcon |
 		self
 			image: theIcon
-			multipliedBy: currentMorph iconColor
+			multipliedBy: currentMorph color
 			at: (currentMorph morphExtent - theIcon extent //2).
 		^true ].
 	^false! !
@@ -486,29 +486,29 @@ image: aForm at: aPoint
 image: aForm multipliedBy: aColor at: aPoint
 	self image: aForm at: aPoint! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/12/2019 17:09:30'!
-initializeWith: aForm origin: aPoint
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 1/26/2022 17:23:32'!
+initializeWithTranslation: aPoint
 
 	|stride |
 	
-	super initializeWith: aForm origin: aPoint.
+	super initializeWithTranslation: aPoint.
 	
 	images _ WeakKeyDictionary new.
 	
-	stride _ Cairo formatStrideForWidth: Cairo CairoFormatARGB32 width: aForm extent x. 
-	surface _ Cairo imageSurfaceCreateForData: aForm pointer getHandle format: Cairo CairoFormatARGB32 width: aForm extent x height: aForm extent y stride: stride.
+	stride _ Cairo formatStrideForWidth: Cairo CairoFormatARGB32 width: form extent x. 
+	surface _ Cairo imageSurfaceCreateForData: form pointer getHandle format: Cairo CairoFormatARGB32 width: form extent x height: form extent y stride: stride.
 	cairo _ CairoContext on: (Cairo create: surface).! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/12/2019 14:33:57'!
+!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 1/26/2022 17:27:51'!
 into: aMorph
 	super into: aMorph.
 	
 	cairo save; translate: aMorph morphPosition.
 
 	aMorph rotation isZero ifFalse: [
-		cairo translate: aMorph morphBounds center;
+		cairo translate: aMorph morphLocalBounds center;
 			   rotate: aMorph rotation degreesToRadians;
-			   translate: 0 - aMorph morphBounds center].
+			   translate: 0 - aMorph morphLocalBounds center].
 	cairo rectangle: (0@0 extent: aMorph morphExtent) ; clip.
 	! !
 
