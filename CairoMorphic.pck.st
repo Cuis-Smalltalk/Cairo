@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5049] on 26 January 2022 at 5:28:48 pm'!
+'From Cuis 6.0 [latest update: #5067] on 11 February 2022 at 1:30:27 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 91!
+!provides: 'CairoMorphic' 1 92!
 !requires: 'Cairo' 1 46 nil!
 SystemOrganization addCategory: 'CairoMorphic'!
 
@@ -333,7 +333,7 @@ withCairoDo: aBlock
 	
 	aBlock value: cairo! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 10/8/2019 19:19:07'!
+!CairoCanvas methodsFor: 'accessing' stamp: 'MM 10/8/2019 19:19:07'!
 cairo
 	^ cairo! !
 
@@ -486,19 +486,6 @@ image: aForm at: aPoint
 image: aForm multipliedBy: aColor at: aPoint
 	self image: aForm at: aPoint! !
 
-!CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 1/26/2022 17:23:32'!
-initializeWithTranslation: aPoint
-
-	|stride |
-	
-	super initializeWithTranslation: aPoint.
-	
-	images _ WeakKeyDictionary new.
-	
-	stride _ Cairo formatStrideForWidth: Cairo CairoFormatARGB32 width: form extent x. 
-	surface _ Cairo imageSurfaceCreateForData: form pointer getHandle format: Cairo CairoFormatARGB32 width: form extent x height: form extent y stride: stride.
-	cairo _ CairoContext on: (Cairo create: surface).! !
-
 !CairoCanvas methodsFor: 'as yet unclassified' stamp: 'MM 1/26/2022 17:27:51'!
 into: aMorph
 	super into: aMorph.
@@ -580,6 +567,19 @@ windowFrame: aRectangle color: aColor radius: r border: bw labelHeight: lh gradi
 	cairo setSourceColor: aColor;
 		   roundedRectangle: aRectangle radius: 10;
 		   fill! !
+
+!CairoCanvas methodsFor: 'initialization' stamp: 'MM 1/26/2022 17:23:32'!
+initializeWithTranslation: aPoint
+
+	|stride |
+	
+	super initializeWithTranslation: aPoint.
+	
+	images _ WeakKeyDictionary new.
+	
+	stride _ Cairo formatStrideForWidth: Cairo CairoFormatARGB32 width: form extent x. 
+	surface _ Cairo imageSurfaceCreateForData: form pointer getHandle format: Cairo CairoFormatARGB32 width: form extent x height: form extent y stride: stride.
+	cairo _ CairoContext on: (Cairo create: surface).! !
 
 !CairoCanvas class methodsFor: 'examples' stamp: 'MM 11/2/2019 15:05:31'!
 fillPolygonExample
