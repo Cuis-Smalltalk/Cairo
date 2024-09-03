@@ -1,6 +1,6 @@
 'From Cuis 6.0 [latest update: #5067] on 11 February 2022 at 1:30:27 pm'!
 'Description An implementation of MorphicCanvas using Cairo FFI.'!
-!provides: 'CairoMorphic' 1 92!
+!provides: 'CairoMorphic' 1 93!
 !requires: 'Cairo' 1 46 nil!
 SystemOrganization addCategory: 'CairoMorphic'!
 
@@ -160,7 +160,7 @@ initialize
 
 !CairoMorphExample methodsFor: 'as yet unclassified' stamp: 'MM 10/9/2019 19:24:54'!
 drawMorphOn: aCanvas
-	aCanvas fillRectangle: self morphLocalBounds color: Color white.
+	aCanvas fillRectangle: self localBounds color: Color white.
 	
 	aCanvas cairo setLineWidth: 5;
 				setSourceColor: Color blue;
@@ -493,9 +493,9 @@ into: aMorph
 	cairo save; translate: aMorph morphPosition.
 
 	aMorph rotation isZero ifFalse: [
-		cairo translate: aMorph morphLocalBounds center;
+		cairo translate: aMorph localBounds center;
 			   rotate: aMorph rotation degreesToRadians;
-			   translate: 0 - aMorph morphLocalBounds center].
+			   translate: 0 - aMorph localBounds center].
 	cairo rectangle: (0@0 extent: aMorph morphExtent) ; clip.
 	! !
 
